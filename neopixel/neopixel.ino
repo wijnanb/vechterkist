@@ -10,9 +10,12 @@
 // arrows printed on the strip).
 
 #include <Adafruit_NeoPixel.h>
+#include <avr/sleep.h>
 
 #define USB Serial
 #define PIN 21
+#define INTERRUPT_PIN 2
+#define STATUS_LED 13
 #define N_LEDS 16
 #define WORM_LENGTH 8
 
@@ -23,9 +26,11 @@ uint32_t c;
 
 void setup() {
   USB.begin(115200);
-  while(!USB && !USB.available()){}
+  // while(!USB && !USB.available()){}
   randomSeed(analogRead(0));
-
+  pinMode(STATUS_LED, OUTPUT);
+  pinMode(INTERRUPT_PIN, INPUT_PULLUP);
+  digitalWrite(STATUS_LED, 1);
   strip.begin();
 }
 
